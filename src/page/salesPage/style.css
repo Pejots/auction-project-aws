@@ -1,0 +1,24 @@
+#search{
+    display: inline;
+    position: absolute;
+    left: 850px;
+    top: 17px;
+    width: 350px;
+}
+#title-header{
+    display: inline;
+}
+#user-header{
+    display: inline;
+
+}
+#user-header{
+    display: inline;
+    position: absolute;
+    right: 45px;
+}
+#icon-user{
+    position:absolute;
+    right: 15px;
+    top: 17px;
+}
