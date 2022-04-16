@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/static/css/style-index.css">
+    <link rel="stylesheet" href="https://icons8.com/icon/84898/usuário-homem-com-círculo">
+    <link target="_blank" href="https://icons8.com">
     <title>Auction Project</title>
 </head>
+
 <body>
     <header>
         <div id="div-header">
@@ -14,9 +18,10 @@
             </h1>
             <input type="text" placeholder="Search" id="search">
             <p id="user-header"> Olá usuário</p>
-            <span id="icon-user"><img src="icons8-usuário-24.png" alt=""></span>
+            <span id="icon-user"><img src="/static/img/icons8-usuário-24.png" alt=""></span>
         </div>
     </header>
-    
+    {% block conteudo %}{% endblock %}
 </body>
+
 </html>

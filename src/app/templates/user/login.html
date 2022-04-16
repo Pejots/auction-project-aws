@@ -1,0 +1,9 @@
+{% extends "/user/template.html" %}
+{% block conteudo %}
+<form action="{{ url_for('do_login') }}" method="POST" class="form-login" id="form-login">
+    <input type="text" id="input-username" name="input-username" placeholder="username"> <br><br>
+    <input type="text" id="input-password" name="input-password" placeholder="password"> <br><br>
+    <button type="submit">Login</button> <br>
+    <a href="{{ url_for('register_user') }}">Cadastre-se</a>
+</form>
+{% endblock %}
