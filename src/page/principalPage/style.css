@@ -1,0 +1,68 @@
+#search{
+    display: inline;
+    position: absolute;
+    left: 850px;
+    top: 17px;
+    width: 350px;
+}
+#title-header{
+    display: inline;
+}
+#user-header{
+    display: inline;
+
+}
+#user-header{
+    display: inline;
+    position: absolute;
+    right: 45px;
+}
+#icon-user{
+    position:absolute;
+    right: 15px;
+    top: 17px;
+}
+
+#example{
+    width: 350px;
+    height: 450px;
+    border: 5px solid black;
+    position: absolute;
+    top: 200px;
+    left: 550px;
+}
+#example-2{
+    width: 350px;
+    height: 450px;
+    border: 5px solid black;
+    position: absolute;
+    top: 200px;
+    left: 1000px;
+}
+#descripition-example-1{
+    display: flex;
+    justify-content: center;
+}
+#ferrari{
+    width: 300px;
+}
+#title-car{
+    display: flex;
+    justify-content: center;
+}
+#text-descripition{
+    display: flex;
+    justify-content: center;
+}
+#price{
+    display: flex;
+    justify-content: center;
+}
+#location{
+    display: flex;
+    justify-content: center;
+}
+#expiration{
+    display: flex;
+    justify-content: center;
+}
