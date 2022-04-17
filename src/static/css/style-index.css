@@ -23,21 +23,34 @@
     top: 17px;
 }
 
-#example{
-    width: 350px;
-    height: 450px;
-    border: 5px solid black;
-    position: absolute;
-    top: 200px;
-    left: 550px;
+.flex-container > div {
+    width: 100px;
+    margin: 10px;
+    text-align: center;
 }
-#example-2{
+#anuncio01{
     width: 350px;
     height: 450px;
     border: 5px solid black;
     position: absolute;
-    top: 200px;
-    left: 1000px;
+    top: 100px;
+    left:30px;
+}
+#anuncio02{
+    width: 350px;
+    height: 450px;
+    border: 5px solid black;
+    position: absolute;
+    top: 100px;
+    left:450px;
+}
+#anuncio03{
+    width: 350px;
+    height: 450px;
+    border: 5px solid black;
+    position: absolute;
+    top: 100px;
+    left:880px;
 }
 #descripition-example-1{
     display: flex;
@@ -70,7 +83,6 @@
     background-color: #4CAF50;
     border: none;
     color: white;
-    margin-left: 125px;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -80,4 +92,13 @@
 #img-product{
     width: 100%;
     height: 210px;
+}
+
+footer {
+	background-color: white;
+	text-align: center;
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	padding: 5px;
 }

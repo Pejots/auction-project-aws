@@ -13,15 +13,22 @@
 <body>
     <header>
         <div id="div-header">
-            <h1 id="title-header">
-                Leilão Lata Velha
-            </h1>
+            <img src="/static/img/empresa.png" alt="Logotipo Leilão Lata Velha" id="img-logo">
             <input type="text" placeholder="Search" id="search">
             <p id="user-header"> Olá usuário</p>
-            <span id="icon-user"><img src="/static/img/icons8-usuário-24.png" alt=""></span>
+            <span id="icon-user">
+                <img src="/static/img/icon-user.png" alt="">
+            </span>
         </div>
     </header>
-    {% block conteudo %}{% endblock %}
+    <main>
+        {% block conteudo %}{% endblock %}
+    </main>
+	<footer>
+		{# Aqui vão ficar as tags do rodapé #}
+		<p>Leilão Lata Velha - Todos os direitos reservados<br>
+		Contato: <a href="mailto:email@leilaolatavelha.com.br" id="link-email">email@leilaolatavelha.com.br</a></p>
+	</footer>
 </body>
 
 </html>
