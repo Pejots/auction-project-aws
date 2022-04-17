@@ -2,8 +2,20 @@
 {% block conteudo %}
 <form action="{{ url_for('new_user') }}" method="POST" class="form-login" id="form-login">
     <input type="text" id="input-username" name="input-username" placeholder="username"> <br><br>
-    <input type="text" id="input-password" name="input-password" placeholder="password"> <br><br>
-    <input type="text" id="input-password" name="input-confirm-password" placeholder="Confirm your password"> <br><br>
+    <input type="password" id="input-password" name="input-password" placeholder="password"> <br><br>
+    <input type="password" id="confirm-password" name="input-confirm-password" placeholder="Confirm your password"> <br><br>
     <button type="submit">Cadastre-se</button> <br>
+    <a href="login.html"> Voltar para pagina de login</a>
 </form>
+<script>
+let form = document.getElementById("form-login")
+
+let name = document.getElementById("input-username")
+let password = document.getElementById("input-password")
+let confirmPassword = document.getElementById("confirm-password")
+
+form.addEventListener('submit', (event) => {
+    window.alert("Usuário criado com sucesso")
+});
+</script>
 {% endblock %}

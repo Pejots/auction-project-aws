@@ -36,28 +36,12 @@
     top: 100px;
     left:30px;
 }
-#anuncio02{
-    width: 350px;
-    height: 450px;
-    border: 5px solid black;
-    position: absolute;
-    top: 100px;
-    left:450px;
-}
-#anuncio03{
-    width: 350px;
-    height: 450px;
-    border: 5px solid black;
-    position: absolute;
-    top: 100px;
-    left:880px;
-}
 #descripition-example-1{
     display: flex;
     justify-content: center;
 }
 #ferrari{
-    width: 300px;
+    width: 110px;
 }
 #title-car{
     display: flex;
@@ -79,6 +63,22 @@
     display: flex;
     justify-content: center;
 }
+#anuncio02{
+    width: 350px;
+    height: 450px;
+    border: 5px solid black;
+    position: absolute;
+    top: 100px;
+    left:450px;
+}
+#anuncio03{
+    width: 350px;
+    height: 450px;
+    border: 5px solid black;
+    position: absolute;
+    top: 100px;
+    left:880px;
+}
 #btn-buy{
     background-color: #4CAF50;
     border: none;
@@ -88,10 +88,6 @@
     text-decoration: none;
     display: inline-block;
     border-radius: 5px;
-}
-#img-product{
-    width: 100%;
-    height: 210px;
 }
 
 footer {
