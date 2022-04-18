@@ -1,0 +1,27 @@
+{% extends "template.html" %}
+
+{% block conteudo %}
+<form action="{{ url_for('new_product') }}" method="POST" class="form-sales" id="form-login">
+    <input type="text" id="input-nameproduct" name="input-nameproduct" placeholder="Name product"> <br><br>
+    <input type="text" id="input-price" name="input-price" placeholder="Price product"> <br><br>
+    <select name="select-category" id="select-category">
+        <option value="">Select category</option>
+        <option value="Cars">Cars</option>
+        <option value="Pieces">Pieces</option>
+    </select> <br><br>
+    <label for="input-datelimit">How long?</label><input type="date" id="input-datelimit" name="input-datelimit"> <br><br>
+    <button type="submit">Save</button> <br>
+    <a href="{{url_for('sales')}}"> Back</a>
+</form>
+<script>
+let form = document.getElementById("form-sales")
+
+let nameproduct = document.getElementById("input-nameproduct")
+let price = document.getElementById("input-price")
+let category = document.getElementById("confirm-category")
+
+form.addEventListener('submit', (event) => {
+    window.alert("Product create succefully")
+});
+</script>
+{% endblock %}

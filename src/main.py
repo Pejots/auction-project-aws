@@ -12,6 +12,19 @@ def sales():
     #Renderiza página de venda
     return render_template('/sales/sales.html')
 
+@app.route('/sales/new')
+def register_sale():
+    return render_template('/sales/sales-new.html')
+
+@app.route('/sales/create', methods=["POST"])
+def new_product():
+    #Lógica para criar produtos
+    nameproduct = request.form['input-nameproduct']
+    return jsonify({
+        'status': 200,
+        'text': f'{nameproduct} create successfully'
+    })
+
 @app.route('/sales/<id>')
 def sale(id):
     #Renderiza página de cada produto em leilão

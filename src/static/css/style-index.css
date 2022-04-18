@@ -90,6 +90,17 @@
     border-radius: 5px;
 }
 
+#btn-new{
+    background-color: #4c7faf;
+    border: none;
+    color: white;
+    padding: 10px 22px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 5px;
+}
+
 footer {
 	background-color: white;
 	text-align: center;
