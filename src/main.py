@@ -5,7 +5,7 @@ app = Flask(__name__, template_folder='app/templates')
 @app.route('/')
 def index():
     #Renderiza página inicial
-    return render_template('index.html')
+    return render_template('index.html', produtos = lista_produtos)
 
 @app.route('/sales')
 def sales():
@@ -20,6 +20,9 @@ def register_sale():
 def new_product():
     #Lógica para criar produtos
     nameproduct = request.form['input-nameproduct']
+    priceproduct = request.form['input-price']
+    categoryproduct = request.form['select-category']
+    datelimitproduct = request.form['input-datelimit']
     return jsonify({
         'status': 200,
         'text': f'{nameproduct} create successfully'
