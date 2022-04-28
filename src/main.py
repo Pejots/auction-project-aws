@@ -5,7 +5,7 @@ app = Flask(__name__, template_folder='app/templates')
 @app.route('/')
 def index():
     #Renderiza página inicial
-    return render_template('index.html', produtos = lista_produtos)
+    return render_template('index.html')
 
 @app.route('/sales')
 def sales():
