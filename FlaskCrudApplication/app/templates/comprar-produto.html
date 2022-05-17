@@ -1,0 +1,20 @@
+{% extends "template.html" %}
+
+{% block conteudo %}
+<h1>
+    Deseja dar um lance?
+</h1>
+<h3>Nome: {{produto.nome}}</h3>
+<h3>Preço: R${{produto.preco}}</h3>
+<h3>Descrição: {{produto.desc}}</h3>
+<div>
+    <h4>
+        Rest: {{date_rest.days}} day(s), {{date_rest.seconds//3600}} hours 
+    </h4>
+</div>
+<div class="text-center">
+    <img src="{{url_for('static', filename=produto.img)}}" class="img-thumbnail" alt="{{produto.nome}}"
+        style="width: 50%;" align="middle">
+</div>
+<a href="{{url_for('index')}}" class="btn btn-info mb-3">Voltar</a>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "template.html" %}
+
+{% block conteudo %}
+<div>
+    <h2>Conteudo do Leilão</h2>
+    <table class="table">
+        <thead>
+            <tr>                
+                <th >Nome</th>
+                <th >Preco</th>
+                <th >Descrição </th>
+                <th >Categoria </th>
+                <th >Date Created </th>
+                <th >Ação</th>
+            </tr>
+            </tr>
+        </thead>
+        <tbody>
+            {% if lista_produtos %}
+                {% for produto in lista_produtos %}
+                <tr>                    
+                    <td >{{ produto.nome }}</td>
+                    <td >{{ produto.preco }}</td>
+                    <td >{{ produto.desc }}</td>
+                    <td >{{ produto.categoria }}</td>
+                    <td id="date_created">{{ produto.date_created }}</td>
+                    <td ><a class="btn btn-info" href="/comprar-produto/{{produto.id}}">Comprar</a></td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+    <div class="mb-5">
+        <a href="/novo-produto" class="btn btn-primary">Novo Produto</a>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block jscript %}
+
+<script>
+    let date_informat = document.querySelectorAll("#date_created");
+    date_informat.forEach((e) => {
+        let date_split = e.textContent.substring(0, 11).split("-");
+        date = date_split[2].trim()+"/"+date_split[1]+"/"+date_split[0];
+        e.textContent = date
+    });
+    
+    
+</script>
+
+{% endblock %}
