@@ -12,12 +12,12 @@
       <div class="card-body">
         <h5 class="card-title">{{ produto.nome }}</h5>
         <p class="card-text">{{ produto.desc }}</p>
-        <a href="/comprar-produto/{{produto.id}}" class="btn btn-primary">Comprar</a>
+        <a href="{{url_for('comprar', id=produto.id)}}" class="btn btn-primary">Comprar</a>
       </div>
     </div>
     {% endfor %}
     <div style="margin: 20px; padding-top: 100px;">
-      <a href="/allproducts" style="color: black;">
+      <a href="{{ url_for('all_products')}}" style="color: black;">
         <svg xmlns="http://www.w3.org/2000/svg" width="100px" height="100px" fill="currentColor"
           class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
           <path
@@ -27,7 +27,7 @@
     </div>
     {% else %}
     <h2 style="text-align: center;">
-      Not Found <a href="/novo-produto">new product</a>
+      Not Found <a href="url_for('novo_produto')">new product</a>
     </h2>
     {% endif %}
   </div>

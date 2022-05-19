@@ -24,14 +24,14 @@
                     <td >{{ produto.desc }}</td>
                     <td >{{ produto.categoria }}</td>
                     <td id="date_created">{{ produto.date_created }}</td>
-                    <td ><a class="btn btn-info" href="/comprar-produto/{{produto.id}}">Comprar</a></td>
+                    <td ><a class="btn btn-info" href="{{url_for('comprar', id=produto.id)}}">Comprar</a></td>
                 </tr>
                 {% endfor %}
             {% endif %}
         </tbody>
     </table>
     <div class="mb-5">
-        <a href="/novo-produto" class="btn btn-primary">Novo Produto</a>
+        <a href="{{ url_for('novo_produto')}}" class="btn btn-primary">Novo Produto</a>
     </div>
 </div>
 
