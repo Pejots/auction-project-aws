@@ -6,7 +6,7 @@
   {% if lista_produtos.count() != 0  %}
   <div class="row">
     {% for produto in lista_produtos %}
-    <div class="card mb-5 mr-5" style="width: 25%;">
+    <div class="card mb-5 mr-3" style="width: 29%;">
       <img src="{{url_for('static', filename=produto.img)}}" class="card-img-top" style="height:200px;"
         alt="{{ produto.nome }}">
       <div class="card-body">
@@ -16,7 +16,7 @@
       </div>
     </div>
     {% endfor %}
-    <div style="margin: 20px; padding-top: 100px;">
+    <div style="padding-top: 100px;">
       <a href="{{ url_for('all_products')}}" style="color: black;">
         <svg xmlns="http://www.w3.org/2000/svg" width="100px" height="100px" fill="currentColor"
           class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
@@ -27,7 +27,7 @@
     </div>
     {% else %}
     <h2 style="text-align: center;">
-      Not Found <a href="url_for('novo_produto')">new product</a>
+      Not Found <a href="{{url_for('novo_produto')}}">new product</a>
     </h2>
     {% endif %}
   </div>

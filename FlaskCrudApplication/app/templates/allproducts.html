@@ -31,7 +31,9 @@
         </tbody>
     </table>
     <div class="mb-5">
+        {% if user_logged %}
         <a href="{{ url_for('novo_produto')}}" class="btn btn-primary">Novo Produto</a>
+        {% endif %}
     </div>
 </div>
 

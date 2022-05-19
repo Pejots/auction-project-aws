@@ -30,6 +30,7 @@ class User(Base, UserMixin):
         self.email = email
         self.senha = senha
 
+
 connection.execute('''CREATE TABLE IF NOT EXISTS USERS(
                               ID INTEGER PRIMARY KEY,
                               nome VARCHAR(255),
@@ -41,14 +42,19 @@ connection.execute('''CREATE TABLE IF NOT EXISTS USERS(
 class Products(Base):
     __tablename__ = 'PRODUCTS'
     id = Column('ID', Integer, primary_key=True, autoincrement=True)
+    id_user_created = Column('ID_USER_CREATED', Integer, nullable=True)
+    id_bid = Column('ID_USER_BID', Integer, nullable=True)
     nome = Column('nome_prod', String(255), nullable=False)
     preco = Column('preco_prod', Float, nullable=False)
     desc = Column('descricao_prod', String(255), nullable=False)
     categoria = Column('categoria_prod', Text, nullable=False)
     date_created = Column('date_created', DateTime, default=datetime.now())
-    img = Column('imagem_prod', String(255), nullable=False, default="produto-nulo.png")
+    img = Column('imagem_prod', String(255),
+                 nullable=False, default="produto-nulo.png")
 
-    def __init__(self, nome_prod, preco_prod, descricao_prod, categoria_prod, imagem_prod):
+    def __init__(self, nome_prod, preco_prod, descricao_prod, categoria_prod, imagem_prod, id_user_created=None, id_bid=None):
+        self.id_user_created = id_user_created
+        self.id_bid = id_bid
         self.nome = nome_prod
         self.preco = preco_prod
         self.desc = descricao_prod
@@ -58,10 +64,30 @@ class Products(Base):
 
 connection.execute('''CREATE TABLE IF NOT EXISTS PRODUCTS(
                               ID INTEGER PRIMARY KEY,
+                              ID_USER_CREATED Integer,
+                              ID_USER_BID Integer,
                               nome_prod VARCHAR(255),
                               preco_prod Decimal(10,2),
                               descricao_prod Text,
                               categoria_prod VARCHAR(20),
                               date_created DateTime,
                               imagem_prod VARCHAR(255)
+                              )''')
+
+
+class ProductsSell(Base):
+    __tablename__ = 'PRODUCTS_SELL'
+    id = Column('ID', Integer, primary_key=True, autoincrement=True)
+    id_user_created = Column('ID_USER_CREATED', Integer, nullable=True)
+    id_bid = Column('ID_USER_BID', Integer, nullable=True)
+
+    def __init__(self, id_user_created, id_bid):
+        self.id_user_created = id_user_created
+        self.id_bid = id_bid
+
+
+connection.execute('''CREATE TABLE IF NOT EXISTS PRODUCTS_SELL(
+                              ID INTEGER PRIMARY KEY,
+                              ID_USER_CREATED Integer,
+                              ID_USER_BID Integer
                               )''')
