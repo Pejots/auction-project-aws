@@ -1,9 +1,8 @@
 from cryptography.fernet import Fernet
 import os
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import datetime, timedelta
 from werkzeug.utils import secure_filename
-from flask_login import login_user, logout_user
 
 from app.models import User, Products, sessionDb
 
@@ -13,6 +12,8 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 application = Flask(__name__, template_folder="./app/templates",
                     static_folder="./app/static")
 application.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+application.secret_key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTGVpbGFvUHJvaiIsInBhc3MiOiJ0ZXN0ZTEyMzMifQ.lJz3ZkWT7CzMjjw5-NXwK-_5xE5STTbBUFF2niBnu2U"
 
 
 def allowed_file(filename):
@@ -33,12 +34,15 @@ verify_datecreated()
 
 @application.route("/")
 def index():
-    return render_template('index.html', cabecalho="Leilão online", lista_produtos=sessionDb.query(Products).limit(3))
+    print(session.get("logged_in"))
+    if not session.get("logged_in"):
+        return redirect(url_for("login"))
+    return render_template('index.html', cabecalho="Leilão online", lista_produtos=sessionDb.query(Products).limit(3), user_logged=session.get("logged_in"))
 
 
 @application.route("/allproducts")
 def all_products():
-    return render_template('allproducts.html', cabecalho="Leilão online", lista_produtos=sessionDb.query(Products))
+    return render_template('allproducts.html', cabecalho="Leilão online", lista_produtos=sessionDb.query(Products), user_logged=session.get("logged_in"))
 
 
 @application.route("/novo-produto")
@@ -46,7 +50,7 @@ def novo_produto():
     # if session.get('logged_in'):
     #     return render_template("novo-produto.html", cabecalho="Novo Produto")
     # return render_template("login.html", cabecalho="Logar")
-    return render_template("novo-produto.html", cabecalho="Novo Produto")
+    return render_template("novo-produto.html", cabecalho="Novo Produto", user_logged=session.get("logged_in"))
 
 
 @application.route("/criar", methods=["POST"])
@@ -59,9 +63,11 @@ def criar_produto():
     if request.method == 'POST':
         file = request.files['imgProduto']
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
+            key = Fernet.generate_key()
+            filename = Fernet(key).encrypt(
+                secure_filename(file.filename).encode())
             file.save(os.path.join(
-                application.config['UPLOAD_FOLDER'], filename).replace("\\", "/"))
+                application.config['UPLOAD_FOLDER'], filename.decode()).replace("\\", "/"))
     produto = Products(nomeProduto, precoProduto,
                        descricaoProduto, categoriaProduto, filename)
     sessionDb.add(produto)
@@ -73,9 +79,19 @@ def criar_produto():
 def comprar(id: int):
     produto = sessionDb.query(Products).get(int(id))
     if produto != None:
-        return render_template("comprar-produto.html", cabecalho=produto.nome, produto=produto, date_rest=(produto.date_created + timedelta(days=3) - datetime.now()))
+        return render_template("comprar-produto.html",
+                               cabecalho=produto.nome, produto=produto,
+                               date_rest=(produto.date_created +
+                                          timedelta(days=3) - datetime.now()),
+                               user_logged=session.get("logged_in"),
+                               price_prediction=round(produto.preco, 2)*1.0)
     return render_template("erro.html")
 
+@application.route('/lance/<id>', methods=["POST"])
+def give_bid(id: int):
+    sessionDb.query(Products).filter(Products.id == id).update({"preco": request.form["inputPricePred"]})
+    sessionDb.commit()
+    return redirect(url_for('index'))
 
 @application.route('/novo-user')
 def novo_user():
@@ -94,6 +110,7 @@ def criar_usuario():
         user = User(nomeUser, emailUser, senhaUser)
         sessionDb.add(user)
         sessionDb.commit()
+        session["logged_in"] = True
         return redirect(url_for('index'))
 
     return render_template('registrar.html', cabecalho="Registrar Usuário")
@@ -117,17 +134,19 @@ def logar():
         fernet = Fernet(key)
 
         user = sessionDb.query(User).filter(
-            User.email == usuario["email"] and fernet.decrypt(User.senha) == usuario["senha"]).first()        
+            User.email == usuario["email"] and fernet.decrypt(User.senha) == usuario["senha"]).first()
         if not user:
             return render_template('login.html', cabecalho="Logar", alerta="Usuário não existe!")
+        session["logged_in"] = True
         return redirect(url_for('index'))
 
-    return render_template('login.html', cabecalho="Logar", alerta="Erro!")
+    return render_template('login.html', cabecalho="Logar", alerta="Erro!", user_logged=session.get("logged_in"))
 
 
 @application.route("/logout")
 def deslogar():
-    logout_user()
+    session["logged_in"] = False
+    print(session.get("logged_in"))
     return redirect(url_for('login'))
 
 
