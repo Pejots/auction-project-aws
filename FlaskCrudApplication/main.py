@@ -1,5 +1,6 @@
 from cryptography.fernet import Fernet
 import os
+import time
 from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import datetime, timedelta
 from werkzeug.utils import secure_filename
@@ -27,14 +28,14 @@ def verify_datecreated():
         if datetime.now() > (product.date_created + timedelta(days=1)):
             product_del = products.filter(Products.id == product.id).first()
             if product_del.id_bid != None:
-                product_sell = ProductsSell(product_del.id_user_created, product_del.id_bid)
+                product_sell = ProductsSell(
+                    product_del.id_user_created, product_del.id_bid)
                 sessionDb.add(product_sell)
                 sessionDb.commit()
+            if product_del.img != "produto-nulo.png":
+                os.remove(f'{UPLOAD_FOLDER}/{product_del.img.decode()}')
             sessionDb.delete(product_del)
             sessionDb.commit()
-
-
-verify_datecreated()
 
 
 def get_info_user(id):
@@ -45,16 +46,19 @@ def get_info_user(id):
 
 @application.route("/")
 def index():
+    verify_datecreated()
     return render_template('index.html', cabecalho="Leilão online", lista_produtos=sessionDb.query(Products).limit(3), user_logged=session.get("logged_in"), user_infos=jsonpickle.decode(session.get("user")))
 
 
 @application.route("/allproducts")
 def all_products():
+    verify_datecreated()
     return render_template('allproducts.html', cabecalho="Leilão online", lista_produtos=sessionDb.query(Products), user_logged=session.get("logged_in"), user_infos=jsonpickle.decode(session.get("user")))
 
 
 @application.route("/novo-produto")
 def novo_produto():
+    verify_datecreated()
     if session.get('logged_in'):
         return render_template("novo-produto.html", cabecalho="Novo Produto", user_logged=session.get("logged_in"), user_infos=jsonpickle.decode(session.get("user")))
     return render_template("login.html", cabecalho="Logar", alerta="Usuário precisa de login!")
@@ -62,6 +66,7 @@ def novo_produto():
 
 @application.route("/criar", methods=["POST"])
 def criar_produto():
+    verify_datecreated()
     creator = jsonpickle.decode(session.get("user"))
     nomeProduto = request.form["nome"]
     precoProduto = request.form["preco"]
@@ -85,22 +90,25 @@ def criar_produto():
 
 @application.route("/comprar-produto/<id>", methods=["GET"])
 def comprar(id: int):
+    verify_datecreated()
     produto = sessionDb.query(Products).get(int(id))
     if produto != None:
         while produto.date_created+timedelta(days=1)-datetime.now() != 0:
             time = produto.date_created+timedelta(days=1)-datetime.now()
             return render_template("comprar-produto.html",
-                                   cabecalho=produto.nome, produto=produto, creator = jsonpickle.decode(get_info_user(produto.id_user_created)),
+                                   cabecalho=produto.nome, produto=produto, creator=jsonpickle.decode(
+                                       get_info_user(produto.id_user_created)),
                                    date_rest=time,
                                    user_logged=session.get("logged_in"),
-                                   user_infos=jsonpickle.decode(session.get("user")),
+                                   user_infos=jsonpickle.decode(
+                                       session.get("user")),
                                    price_prediction=round(produto.preco, 2)*1.0)
-    verify_datecreated()
     return render_template("erro.html")
 
 
 @application.route('/lance/<id>', methods=["POST"])
 def give_bid(id: int):
+    verify_datecreated()
     if session.get("logged_in"):
         buyer = jsonpickle.decode(session.get("user"))
         sessionDb.query(Products).filter(Products.id == id).update(
@@ -112,11 +120,13 @@ def give_bid(id: int):
 
 @application.route('/novo-user')
 def novo_user():
+    verify_datecreated()
     return render_template('registrar.html', cabecalho="Novo User")
 
 
 @application.route('/criar-user', methods=['POST'])
 def criar_usuario():
+    verify_datecreated()
     nomeUser = request.form['nome']
     emailUser = request.form['email']
     key = Fernet.generate_key()
@@ -134,11 +144,13 @@ def criar_usuario():
 
 @application.route("/login")
 def login():
+    verify_datecreated()
     return render_template("login.html", cabecalho="Logar")
 
 
 @application.route("/logar-usuario", methods=["GET", "POST"])
 def logar():
+    verify_datecreated()
     if request.method == "POST":
         usuario = {
             'email': request.form['email'],
@@ -162,6 +174,7 @@ def logar():
 
 @application.route("/logout")
 def deslogar():
+    verify_datecreated()
     session["logged_in"] = False
     return redirect(url_for('login'))
 

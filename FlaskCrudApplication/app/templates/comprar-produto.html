@@ -27,12 +27,18 @@
                             {% if user_logged %}
                             <button type="submit" id="btnPricePred" class="btn btn-success">Get</button>
                             {% else %}
-                            <button type="submit" id="btnPricePred" class="btn btn-success" disabled>Get</button>
+                            <button type="submit" id="btnPricePred" class="btn btn-success disabled"
+                                disabled>Get</button>
                             {% endif %}
                         </div>
                         <div class="col-8">
+                            {% if user_logged %}
                             <input class="form-control" type="text" style="width: 200px;" id="inputPricePred"
                                 name="inputPricePred" placeholder="Minimum bid {{ price_prediction * 1.05 }}" />
+                            {% else %}
+                            <input class="form-control" type="text" style="width: 200px;" id="inputPricePred"
+                                name="inputPricePred" placeholder="Minimum bid {{ price_prediction * 1.05 }}" disabled/>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
