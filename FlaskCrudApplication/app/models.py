@@ -2,8 +2,6 @@ from sqlalchemy import create_engine, Column, Integer, String, Float, Text, Date
 from datetime import datetime
 from sqlalchemy.orm import Session
 from sqlalchemy.ext.declarative import declarative_base
-from flask_login import UserMixin
-from app import login_manager
 
 # CONFIGURAR CONEXÃO COM BANCO DE DADOS SQLITE
 engine = create_engine("sqlite:///server.db",
@@ -17,7 +15,7 @@ sessionDb = Session()
 Base = declarative_base(engine)
 
 
-class User(Base, UserMixin):
+class User(Base):
     __tablename__ = 'USERS'
     id = Column('ID', Integer, primary_key=True, autoincrement=True)
     nome = Column('nome', String(255), nullable=False)
