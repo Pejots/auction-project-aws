@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from waitress import serve
 from cryptography.fernet import Fernet
 import os
 from flask import Flask, render_template, request, redirect, url_for, session
@@ -186,4 +187,5 @@ def deslogar():
 
 
 if __name__ == "__main__":
-    application.run(host="0.0.0.0", debug=True)
+    serve(application, host='0.0.0.0', port=80)
+    # application.run(host='0.0.0.0', port=80, debug=True)
