@@ -66,14 +66,8 @@
         let vlr_f = vlr * 1.0;
         if (inputPrice.value * 1.0 < vlr_f && inputPrice.value != "") {
             window.event.preventDefault();
-            setTimeout(function () {
-                alert.classList.remove('disabled')
-            }, 2000);
-            setTimeout(function () {
-                alert.remove()
-            }, 2500);
             window.alert(`Valor de lance menor que o mínimo de R$ ${vlr_f.toFixed(2)+1}`);
-            inputPrice.value = vlr_f.toFixed(2)+1
+            inputPrice.value = vlr_f.toFixed(2) + 1
         }
         if (inputPrice.value == "") {
             window.event.preventDefault();
