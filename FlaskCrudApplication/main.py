@@ -33,7 +33,8 @@ def verify_datecreated():
                 sessionDb.add(product_sell)
                 sessionDb.commit()
             if product_del.img != "produto-nulo.png":
-                os.remove(application.config['UPLOAD_FOLDER']+"/"+product_del.img.decode())
+                os.remove(
+                    application.config['UPLOAD_FOLDER']+"/"+product_del.img.decode())
             sessionDb.delete(product_del)
             sessionDb.commit()
 
@@ -47,7 +48,12 @@ def get_info_user(id):
 @application.route("/")
 def index():
     verify_datecreated()
-    return render_template('index.html', cabecalho="Leilão online", lista_produtos=sessionDb.query(Products).limit(3), user_logged=session.get("logged_in"), user_infos=jsonpickle.decode(session.get("user")))
+
+    try:
+        user = jsonpickle.decode(session.get("user"))
+    except:
+        user = ""
+    return render_template('index.html', cabecalho="Leilão online", lista_produtos=sessionDb.query(Products).limit(3), user_logged=session.get("logged_in"), user_infos=user)
 
 
 @application.route("/allproducts")
@@ -178,5 +184,6 @@ def deslogar():
     session["logged_in"] = False
     return redirect(url_for('login'))
 
+
 if __name__ == "__main__":
-    application.run(host="0.0.0.0", port=80,debug=True)
+    application.run(host="0.0.0.0", debug=True)
