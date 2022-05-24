@@ -89,7 +89,7 @@ def criar_produto():
 
 
 @application.route("/comprar-produto/<id>", methods=["GET"])
-def comprar(id: int):
+def comprar(id):
     verify_datecreated()
     produto = sessionDb.query(Products).get(int(id))
     if produto != None:
@@ -107,11 +107,11 @@ def comprar(id: int):
 
 
 @application.route('/lance/<id>', methods=["POST"])
-def give_bid(id: int):
+def give_bid(id):
     verify_datecreated()
     if session.get("logged_in"):
         buyer = jsonpickle.decode(session.get("user"))
-        sessionDb.query(Products).filter(Products.id == id).update(
+        sessionDb.query(Products).filter(Products.id == int(id)).update(
             {"preco": request.form["inputPricePred"], "id_bid": buyer.id})
         sessionDb.commit()
         return redirect(url_for('index'))
