@@ -60,7 +60,11 @@ def index():
 @application.route("/allproducts")
 def all_products():
     verify_datecreated()
-    return render_template('allproducts.html', cabecalho="Leilão online", lista_produtos=sessionDb.query(Products), user_logged=session.get("logged_in"), user_infos=jsonpickle.decode(session.get("user")))
+    try:
+        user = jsonpickle.decode(session.get("user"))
+    except:
+        user = ""
+    return render_template('allproducts.html', cabecalho="Leilão online", lista_produtos=sessionDb.query(Products), user_logged=session.get("logged_in"), user_infos=user)
 
 
 @application.route("/novo-produto")
@@ -97,6 +101,10 @@ def criar_produto():
 
 @application.route("/comprar-produto/<id>", methods=["GET"])
 def comprar(id):
+    try:
+        user = jsonpickle.decode(session.get("user"))
+    except:
+        user = ""
     verify_datecreated()
     produto = sessionDb.query(Products).get(int(id))
     if produto != None:
@@ -107,8 +115,7 @@ def comprar(id):
                                        get_info_user(produto.id_user_created)),
                                    date_rest=time,
                                    user_logged=session.get("logged_in"),
-                                   user_infos=jsonpickle.decode(
-                                       session.get("user")),
+                                   user_infos=user,
                                    price_prediction=round(produto.preco, 2)*1.0)
     return render_template("erro.html")
 
@@ -186,6 +193,6 @@ def deslogar():
     return redirect(url_for('login'))
 
 
-if __name__ == "__main__":
-    serve(application, host='0.0.0.0', port=80)
-    # application.run(host='0.0.0.0', port=80, debug=True)
+# if __name__ == "__main__":
+#     serve(application, host='0.0.0.0', port=80)
+application.run(debug=True)
