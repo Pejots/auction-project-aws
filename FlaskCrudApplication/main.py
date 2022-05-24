@@ -32,7 +32,7 @@ def verify_datecreated():
                 sessionDb.add(product_sell)
                 sessionDb.commit()
             if product_del.img != "produto-nulo.png":
-                os.remove(f'{UPLOAD_FOLDER}/{product_del.img.decode()}')
+                os.remove(f"{application.config['UPLOAD_FOLDER']}/{product_del.img.decode()}")
             sessionDb.delete(product_del)
             sessionDb.commit()
 
