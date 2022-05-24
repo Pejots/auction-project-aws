@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from cryptography.fernet import Fernet
 import os
 from flask import Flask, render_template, request, redirect, url_for, session
