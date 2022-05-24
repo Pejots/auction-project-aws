@@ -177,5 +177,5 @@ def deslogar():
     session["logged_in"] = False
     return redirect(url_for('login'))
 
-
-application.run(host='0.0.0.0', port=5000, debug=True)
+if __name__ == "__main__":
+    application.run(host='0.0.0.0', port=5000, debug=True)
