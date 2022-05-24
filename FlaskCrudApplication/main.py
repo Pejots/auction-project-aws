@@ -10,7 +10,7 @@ from app.models import ProductsSell, User, Products, sessionDb
 UPLOAD_FOLDER = './app/static'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
-application = Flask(__name__, template_folder="./app/templates",
+application = Flask('__name__', template_folder="./app/templates",
                     static_folder="./app/static")
 application.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
