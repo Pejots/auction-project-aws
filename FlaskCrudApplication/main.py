@@ -178,4 +178,4 @@ def deslogar():
     return redirect(url_for('login'))
 
 
-application.run(host='0.0.0.0', debug=True)
+application.run(host='0.0.0.0', port=5000, debug=True)
