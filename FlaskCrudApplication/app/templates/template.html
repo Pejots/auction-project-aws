@@ -31,9 +31,11 @@
                 <div class="col-4 d-flex justify-content-end align-items-center">
                     {% if user_logged == True %}
                     <span class="mr-2"> Hi, {{user_infos.nome}}</span>
-                    <a href="{{ url_for('deslogar') }}" class="btn btn-sm btn-outline-secondary" style="width: 100px;">Logout</a>
-                    {% else %}                    
-                    <a href="{{ url_for('login') }}" class="btn btn-sm btn-outline-secondary" aria-current="page" style="width: 100px;">Login</a>
+                    <a href="{{ url_for('deslogar') }}" class="btn btn-sm btn-outline-secondary"
+                        style="width: 100px;">Logout</a>
+                    {% else %}
+                    <a href="{{ url_for('login') }}" class="btn btn-sm btn-outline-secondary" aria-current="page"
+                        style="width: 100px;">Login</a>
                     {% endif %}
                 </div>
             </div>
@@ -60,7 +62,6 @@
 
     {% block jscript %}{% endblock %}
     <script>
-    
         let alert = document.querySelector(".alert");
         if (alert != null) {
             setTimeout(function () {

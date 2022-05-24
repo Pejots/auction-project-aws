@@ -1,9 +1,7 @@
 {% extends "template.html" %}
 
 {% block conteudo %}
-<div class="alert alert-danger text-center" role="alert">
-    <span class="col-6"></span>
-</div>
+
 <div class="row">
     <div class="col-6">
         <h5><small class="text-muted">By {{creator.nome}}</small></h5>
@@ -68,18 +66,14 @@
         let vlr_f = vlr * 1.0;
         if (inputPrice.value * 1.0 < vlr_f && inputPrice.value != "") {
             window.event.preventDefault();
-
-            let alert = document.querySelector(".alert");
             setTimeout(function () {
-                alert.classList.add('fade');
-                alert.textContent = `Valor de lance menor que o mínimo de R$ ${vlr_f.toFixed(2)}`;
+                alert.classList.remove('disabled')
             }, 2000);
             setTimeout(function () {
                 alert.remove()
             }, 2500);
-
-            window.alert(`Valor de lance menor que o mínimo de R$ ${vlr_f.toFixed(2)}`);
-            inputPrice.value = vlr
+            window.alert(`Valor de lance menor que o mínimo de R$ ${vlr_f.toFixed(2)+1}`);
+            inputPrice.value = vlr_f.toFixed(2)+1
         }
         if (inputPrice.value == "") {
             window.event.preventDefault();
