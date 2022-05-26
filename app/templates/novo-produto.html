@@ -1,0 +1,39 @@
+{% extends "template.html" %}
+
+{% block conteudo %}
+<form class="mb-3" action="{{ url_for('criar_produto') }}" method="POST" enctype=multipart/form-data> <fieldset>
+    <div class="row">
+        <div class="col-8">
+            <label for="nome">Produto</label>
+            <input type="text" id="nome" name="nome" class="form-control" placeholder="Nome do Produto">
+        </div>
+        <div class="col-4">
+            <label for="preco">Preço</label>
+            <input type="number" id="preco" name="preco" class="form-control" placeholder="Preço do Produto">
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-4">
+            <label>Preço</label>
+            <select id="categoria" name="categoria" class="form-control">
+                <option value="Car">Cars</option>
+                <option value="Piece">Pieces</option>
+            </select>
+        </div>
+        <div class="col-8">
+            <label for="descricao">Descrição</label>
+            <textarea id="descricao" name="descricao" class="form-control"
+                placeholder="Descreva o estado do produto" ></textarea>
+        </div>
+    </div>
+    <div class="row col mt-3 input-group mb-3">
+        <label class="input-group-text" for="imgProduto">Carregar Foto</label>
+        <input type="file" class="form-control" id="imgProduto" name="imgProduto">
+    </div>
+    <div class="row col mt-3">
+        <button type="submit" class="btn btn-primary btn-salvar mr-3">Salvar</button>
+        <a href="/" class="btn btn-primary btn-salvar">Voltar</a>
+    </div>
+    </fieldset>
+</form>
+{% endblock %}

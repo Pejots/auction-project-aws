@@ -1,0 +1,95 @@
+{% extends "template.html" %}
+
+{% block conteudo %}
+
+<div class="row">
+    <div class="col-6">
+        <h5><small class="text-muted">By {{creator.nome}}</small></h5>
+        <h1>
+            Want to bid ?
+        </h1>
+        <h3>Name: {{produto.nome}}</h3>
+        <h3>Price: R$<span id="priceFormat">{{produto.preco}}</span></h3>
+        <h3>Description: {{produto.desc}}</h3>
+        <div>
+            <h4>
+                <!-- Rest: {{date_rest.days}} day(s), {{date_rest.seconds//3600}} hours -->
+                <!-- Rest: {{date_rest.seconds//3600}}:{{date_rest.seconds//60%60}}:{{date_rest.seconds%60}} -->
+                Rest: <span id="dateFormat">{{date_rest}}</span>
+            </h4>
+        </div>
+        <hr>
+        <form class="form-group" action="{{ url_for('give_bid', id=produto.id) }}"
+            onsubmit='onCheckPrice("{{price_prediction * 1.05}}")' id="formBid" method="post">
+            <div class="row">
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-4">
+                            {% if user_logged %}
+                            <button type="submit" id="btnPricePred" class="btn btn-success">Get</button>
+                            {% else %}
+                            <button type="submit" id="btnPricePred" class="btn btn-success disabled"
+                                disabled>Get</button>
+                            {% endif %}
+                        </div>
+                        <div class="col-8">
+                            {% if user_logged %}
+                            <input class="form-control" type="text" style="width: 200px;" id="inputPricePred"
+                                name="inputPricePred" placeholder="Minimum bid {{ price_prediction * 1.05 }}" />
+                            {% else %}
+                            <input class="form-control" type="text" style="width: 200px;" id="inputPricePred"
+                                name="inputPricePred" placeholder="Minimum bid {{ price_prediction * 1.05 }}"
+                                disabled />
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div class="col-6 text-center">
+        <img src="{{url_for('static', filename=produto.img)}}" class="img-thumbnail" alt="{{produto.nome}}"
+            style="width: 100%;" align="middle">
+    </div>
+</div>
+<a href="{{url_for('index')}}" class="btn btn-info mb-3">Back</a>
+{% endblock %}
+
+{% block jscript %}
+<script>
+    priceFormat()
+    checkDateLimit()
+
+    function onCheckPrice(vlr) {
+        let inputPrice = document.getElementById('inputPricePred');
+        let vlr_f = vlr * 1.0;
+        if (inputPrice.value * 1.0 < vlr_f && inputPrice.value != "") {
+            window.event.preventDefault();
+            window.alert(`Valor de lance menor que o mínimo de R$ ${vlr_f.toFixed(2)+1}`);
+            inputPrice.value = vlr_f.toFixed(2) + 1
+        }
+        if (inputPrice.value == "") {
+            window.event.preventDefault();
+            window.alert(`Por favor, insira um lance.`)
+        }
+    }
+
+    function checkDateLimit() {
+        let date = document.getElementById("dateFormat");
+        if (date.textContent.split(":")[0] == "0") {
+            dateStart = `${date.textContent.split(":")[0]}0`
+        } else {
+            dateStart = date.textContent.split(":")[0]
+        }
+        date.textContent =
+            `${dateStart}:${date.textContent.split(":")[1]}:${date.textContent.split(":")[2].substring(0,2)}`
+    }
+
+    function priceFormat() {
+        let price = document.getElementById("priceFormat");
+        price = price.textContent * 1.0;
+        document.getElementById("priceFormat").innerHTML = price.toFixed(2);
+    }
+</script>
+{% endblock %}

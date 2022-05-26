@@ -1,0 +1,28 @@
+{% extends "template.html" %}
+
+{% block conteudo %}
+<form class="mb-3" action="{{ url_for('criar_usuario') }}" method="POST" enctype=multipart/form-data>
+    <fieldset>
+        <div class="row">
+            <div class="col-12">
+                <label for="nome">Nome</label>
+                <input type="tex" id="nome" name="nome" class="form-control" placeholder="Email do usuário">
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-6">
+                <label for="nome">Email</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Email do usuário">
+            </div>        
+            <div class="col-6">
+                <label for="categoria">Senha</label>
+                <input type="password" id="senha" name="senha" class="form-control" placeholder="Senha do usuário">
+            </div>
+        </div>
+        <div class="row col mt-3">
+            <button type="submit" class="btn btn-primary btn-salvar mr-3">Registrar</button>
+            <a href="/" class="btn btn-primary btn-salvar">Voltar</a>
+        </div>
+    </fieldset>
+</form>
+{% endblock %}

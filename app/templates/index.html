@@ -1,0 +1,46 @@
+{% extends "template.html" %}
+
+{% block conteudo %}
+<div>
+  <h2>Conteudo do Leilão</h2>
+  {% if lista_produtos.count() != 0  %}
+  <div class="row">
+    {% for produto in lista_produtos %}
+    <div class="card mb-5 mr-3" style="width: 29%;">
+      <img src="{{url_for('static', filename=produto.img)}}" class="card-img-top" style="height:200px;"
+        alt="{{ produto.nome }}">
+      <div class="card-body">
+        <h5 class="card-title">{{ produto.nome }}</h5>
+        <p class="card-text">{{ produto.desc }}</p>
+        <a href="{{url_for('comprar', id=produto.id)}}" class="btn btn-primary">Comprar</a>
+      </div>
+    </div>
+    {% endfor %}
+    <div style="padding-top: 100px;">
+      <a href="{{ url_for('all_products')}}" style="color: black;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100px" height="100px" fill="currentColor"
+          class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+          <path
+            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+        </svg>
+      </a>
+    </div>
+    {% else %}
+    <h2 style="text-align: center;">
+      Not Found <a href="{{url_for('novo_produto')}}">new product</a>
+    </h2>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
+
+{% block jscript %}
+
+<script>
+  let date = document.querySelector("#date_created");
+  let date_split = date.textContent.substring(0, 11).split("-");
+  date.textContent = date_split[2].trim() + "/" + date_split[1] + "/" + date_split[0];
+</script>
+
+{% endblock %}
